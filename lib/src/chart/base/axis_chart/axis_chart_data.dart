@@ -175,8 +175,10 @@ class AxisTitle with EquatableMixin {
       showTitle: b.showTitle,
       titleText: b.titleText,
       reservedSize: lerpDouble(a.reservedSize, b.reservedSize, t),
-      textStyle: TextStyle.lerp(a.textStyle.copyWith(fontSize: a.textStyle.fontSize),
-          b.textStyle.copyWith(fontSize: b.textStyle.fontSize), t),
+      textStyle: TextStyle.lerp(
+          a.textStyle.copyWith(fontSize: a.textStyle.fontSize),
+          b.textStyle.copyWith(fontSize: b.textStyle.fontSize),
+          t),
       textDirection: b.textDirection,
       textAlign: b.textAlign,
       margin: lerpDouble(a.margin, b.margin, t),
@@ -211,10 +213,12 @@ class FlTitlesData with EquatableMixin {
     SideTitles? rightTitles,
     SideTitles? bottomTitles,
   })  : show = show ?? true,
-        leftTitles = leftTitles ?? SideTitles(reservedSize: 40, showTitles: true),
+        leftTitles =
+            leftTitles ?? SideTitles(reservedSize: 40, showTitles: true),
         topTitles = topTitles ?? SideTitles(reservedSize: 6),
         rightTitles = rightTitles ?? SideTitles(reservedSize: 40),
-        bottomTitles = bottomTitles ?? SideTitles(reservedSize: 22, showTitles: true);
+        bottomTitles =
+            bottomTitles ?? SideTitles(reservedSize: 22, showTitles: true);
 
   /// Lerps a [FlTitlesData] based on [t] value, check [Tween.lerp].
   static FlTitlesData lerp(FlTitlesData a, FlTitlesData b, double t) {
@@ -239,14 +243,14 @@ class FlTitlesData with EquatableMixin {
 }
 
 /// Determines showing or hiding specified title.
-typedef CheckToShowTitle = bool Function(
-    double minValue, double maxValue, SideTitles sideTitles, double appliedInterval, double value);
+typedef CheckToShowTitle = bool Function(double minValue, double maxValue,
+    SideTitles sideTitles, double appliedInterval, double value);
 
 /// The default [SideTitles.checkToShowTitle] function.
 ///
 /// It determines showing or not showing specific title.
-bool defaultCheckToShowTitle(
-    double minValue, double maxValue, SideTitles sideTitles, double appliedInterval, double value) {
+bool defaultCheckToShowTitle(double minValue, double maxValue,
+    SideTitles sideTitles, double appliedInterval, double value) {
   if ((maxValue - minValue) % appliedInterval == 0) {
     return true;
   }
@@ -343,15 +347,17 @@ class SideTitles with EquatableMixin {
 class FlSpot with EquatableMixin {
   final double x;
   final double y;
+  final String? imageID;
 
   /// [x] determines cartesian (axis based) horizontally position
   /// 0 means most left point of the chart
   ///
   /// [y] determines cartesian (axis based) vertically position
   /// 0 means most bottom point of the chart
-  FlSpot(double x, double y)
+  FlSpot(double x, double y, {String? imageID})
       : x = x,
-        y = y;
+        y = y,
+        imageID = imageID;
 
   /// Copies current [FlSpot] to a new [FlSpot],
   /// and replaces provided values.
@@ -368,7 +374,8 @@ class FlSpot with EquatableMixin {
   ///Prints x and y coordinates of FlSpot list
   @override
   String toString() {
-    return '(' + x.toString() + ', ' + y.toString() + ')';
+    return '(' + x.toString() + ', ' + y.toString() + '), ' + (imageID ??
+        "no image");
   }
 
   /// Used for splitting lines, or maybe other concepts.
@@ -487,7 +494,8 @@ class FlGridData with EquatableMixin {
     return FlGridData(
       show: b.show,
       drawHorizontalLine: b.drawHorizontalLine,
-      horizontalInterval: lerpDouble(a.horizontalInterval, b.horizontalInterval, t),
+      horizontalInterval:
+          lerpDouble(a.horizontalInterval, b.horizontalInterval, t),
       getDrawingHorizontalLine: b.getDrawingHorizontalLine,
       checkToShowHorizontalLine: b.checkToShowHorizontalLine,
       drawVerticalLine: b.drawVerticalLine,
@@ -621,7 +629,8 @@ class RangeAnnotations with EquatableMixin {
         verticalRangeAnnotations = verticalRangeAnnotations ?? const [];
 
   /// Lerps a [RangeAnnotations] based on [t] value, check [Tween.lerp].
-  static RangeAnnotations lerp(RangeAnnotations a, RangeAnnotations b, double t) {
+  static RangeAnnotations lerp(
+      RangeAnnotations a, RangeAnnotations b, double t) {
     return RangeAnnotations(
       horizontalRangeAnnotations: lerpHorizontalRangeAnnotationList(
           a.horizontalRangeAnnotations, b.horizontalRangeAnnotations, t),

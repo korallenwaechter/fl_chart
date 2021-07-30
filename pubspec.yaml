@@ -12,6 +12,7 @@ dependencies:
 
   equatable: ^2.0.0
   pedantic: ^1.11.0
+  image: ^3.0.2
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,7 @@ import 'package:fl_chart/src/extensions/color_extension.dart';
 import 'package:fl_chart/src/utils/lerp.dart';
 import 'package:fl_chart/src/utils/utils.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:image/image.dart' as image;
 
 /// [LineChart] needs this class to render itself.
 ///
@@ -982,18 +983,6 @@ class FlDotCrossPainter extends FlDotPainter {
 /// This class is an implementation of a [FlDotPainter] that draws
 /// a an icon
 class FlDotIconPainter extends FlDotPainter {
-  /// The fill color to use for the circle
-  Color color;
-
-  /// Customizes the radius of the circle
-  double radius;
-
-  /// The stroke color to use for the circle
-  Color strokeColor;
-
-  /// The stroke width to use for the circle
-  double strokeWidth;
-
   Image image;
 
   /// The color of the circle is determined determined by [color],
@@ -1001,39 +990,30 @@ class FlDotIconPainter extends FlDotPainter {
   /// You can have a stroke line around the circle,
   /// by setting the thickness with [strokeWidth],
   /// and you can change the color of of the stroke with [strokeColor].
-  FlDotIconPainter(
-      {Color? color, double? radius, Color? strokeColor, double? strokeWidth, required Image image})
-      : color = color ?? Colors.green,
-        radius = radius ?? 4.0,
-        strokeColor = strokeColor ?? Colors.green.darken(),
-        strokeWidth = strokeWidth ?? 1.0,
-        image = image;
+  FlDotIconPainter({required Image image}) : image = image;
 
   /// Implementation of the parent class to draw the circle
   @override
   void draw(Canvas canvas, FlSpot spot, Offset offsetInCanvas) {
+    Offset newOffset = Offset(
+        offsetInCanvas.dx - getSize(spot).width / 2, offsetInCanvas.dy - getSize(spot).height / 2);
     canvas.drawImage(
         image,
-        offsetInCanvas,
+        newOffset,
         Paint()
-          ..color = Colors.transparent
-          ..style = PaintingStyle.stroke);
+          ..color = Colors.green
+          ..style = PaintingStyle.fill);
   }
 
   /// Implementation of the parent class to get the size of the circle
   @override
   Size getSize(FlSpot spot) {
-    return Size(radius * 2, radius * 2);
+    return Size(image.height.toDouble(), image.width.toDouble());
   }
 
   /// Used for equality check, see [EquatableMixin].
   @override
-  List<Object?> get props => [
-        color,
-        radius,
-        strokeColor,
-        strokeWidth,
-      ];
+  List<Object?> get props => [image];
 }
 
 /// It determines showing or hiding [FlDotData] on the spots.
