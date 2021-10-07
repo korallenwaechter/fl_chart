@@ -9,7 +9,6 @@ import 'package:fl_chart/src/extensions/color_extension.dart';
 import 'package:fl_chart/src/utils/lerp.dart';
 import 'package:fl_chart/src/utils/utils.dart';
 import 'package:flutter/material.dart' hide Image;
-import 'package:image/image.dart' as image;
 
 /// [LineChart] needs this class to render itself.
 ///

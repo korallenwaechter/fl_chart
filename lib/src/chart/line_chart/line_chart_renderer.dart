@@ -77,6 +77,8 @@ class RenderLineChart extends RenderBox implements MouseTrackerAnnotation {
 
   List<LineBarSpot>? _lastTouchedSpots;
 
+  Offset? _downPosition;
+
   late bool _validForMouseTracker;
 
   @override
@@ -128,6 +130,7 @@ class RenderLineChart extends RenderBox implements MouseTrackerAnnotation {
     var response = LineTouchResponse(null, event, false);
 
     var touchedSpots = _painter.handleTouch(event, size, paintHolder);
+
     if (touchedSpots == null || touchedSpots.isEmpty) {
       _touchCallback?.call(response);
       return;
@@ -135,14 +138,14 @@ class RenderLineChart extends RenderBox implements MouseTrackerAnnotation {
     response = response.copyWith(lineBarSpots: touchedSpots);
 
     if (event is PointerDownEvent) {
+      _downPosition = event.localPosition;
       _lastTouchedSpots = touchedSpots;
     } else if (event is PointerUpEvent) {
-      if (_lastTouchedSpots == touchedSpots) {
+      if (_downPosition == event.localPosition) {
         response = response.copyWith(clickHappened: true);
       }
       _lastTouchedSpots = null;
     }
-
     _touchCallback?.call(response);
   }
 
