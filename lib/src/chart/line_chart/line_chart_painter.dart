@@ -864,7 +864,9 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           x -= tp.width + leftTitles.margin;
           y -= tp.height / 2;
           x += calculateRotationOffset(tp.size, leftTitles.rotateAngle).dx;
-          canvasWrapper.drawText(tp, Offset(x, y), leftTitles.rotateAngle);
+          if (text != '') {
+            canvasWrapper.drawText(tp, Offset(x, y), leftTitles.rotateAngle);
+          }
         }
         if (data.maxY - verticalSeek < leftInterval && data.maxY != verticalSeek) {
           verticalSeek = data.maxY;
@@ -957,6 +959,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           var x = getPixelX(horizontalSeek, viewSize, holder);
           var y = viewSize.height + getTopOffsetDrawSize(holder);
           final text = bottomTitles.getTitles(horizontalSeek);
+
           final span = TextSpan(style: bottomTitles.getTextStyles(horizontalSeek), text: text);
           final tp = TextPainter(
               text: span,
@@ -968,7 +971,10 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           x -= tp.width / 2;
           y += bottomTitles.margin;
           y -= calculateRotationOffset(tp.size, bottomTitles.rotateAngle).dy;
-          canvasWrapper.drawText(tp, Offset(x, y), bottomTitles.rotateAngle);
+
+          if (text != '') {
+            canvasWrapper.drawText(tp, Offset(x, y), bottomTitles.rotateAngle);
+          }
         }
 
         if (data.maxX - horizontalSeek < bottomInterval && data.maxX != horizontalSeek) {
